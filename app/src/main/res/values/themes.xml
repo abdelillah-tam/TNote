@@ -1,0 +1,56 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.TNote" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#FFB3B3</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="TitleAppearanceToolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:textSize">17sp</item>
+        <item name="fontFamily">@font/euclid_circular_b_light</item>
+    </style>
+    <style name="SubtitleAppearanceToolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:textSize">23sp</item>
+        <item name="fontFamily">@font/euclid_circular_b_bold</item>
+    </style>
+
+
+    <style name="NightAdjusted.Theme.Tnt" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    </style>
+
+    <style name="PlatformAdjusted.Theme.Tnt" parent="NightAdjusted.Theme.Tnt">
+        <item name="android:statusBarColor">@color/purple_700</item>
+    </style>
+
+    <style name="Theme.Tnt" parent="PlatformAdjusted.Theme.Tnt" />
+    
+    <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+    </style>
+
+    <style name="Theme.Tnt.Splash" parent="NightAdjusted.Theme.Splash">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_background</item>
+        <item name="postSplashScreenTheme">@style/Theme.Tnt</item>
+    </style>
+
+    <style name="FloatingShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+        <item name="cornerSizeTopLeft">50%</item>
+        <item name="android:shadowRadius">0</item>
+    </style>
+
+</resources>

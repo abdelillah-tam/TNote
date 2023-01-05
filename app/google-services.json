@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1051382879033",
+    "project_id": "tnote-22c7a",
+    "storage_bucket": "tnote-22c7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051382879033:android:c22db9d39ddee2c9580ee8",
+        "android_client_info": {
+          "package_name": "com.example.tnote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1051382879033-ua5gihkd5v7muq622a9hoee61hethbqv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tnote",
+            "certificate_hash": "ca2c8fe9ec9fe90727d1ef97ebbf719848edbda6"
+          }
+        },
+        {
+          "client_id": "1051382879033-ud4vt3i8t2ae3ebfn97pkal2gnsk5o32.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRya7NkKvWTNySnbBRJSnjyTN8mNCehfs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1051382879033-ud4vt3i8t2ae3ebfn97pkal2gnsk5o32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

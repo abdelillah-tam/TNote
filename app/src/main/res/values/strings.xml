@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">TNote</string>
+    <string name="tasks_to_do">tasks to do</string>
+    <string name="recent_notes">recent notes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="facebook_app_id">485195980412379</string>
+    <string name="fb_login_protocol_scheme">fb485195980412379</string>
+    <string name="facebook_client_token">5ce9421c84b307e352ab81edcd27eb74</string>
+    <string name="login_with_facebook">Login with facebook</string>
+    <string name="login_with_email">Login with Email</string>
+    <string name="enter_you_email">Enter you email</string>
+    <string name="enter_a_password">Enter a password</string>
+    <string name="register">Register</string>
+    <string name="question_register">Register?</string>
+    <string name="login">Login</string>
+    <string name="add_note">Add note</string>
+    <string name="save">Save</string>
+    <string name="no_tasks_to_do_right_now">No tasks to do right now.</string>
+    <string name="no_note_right_now">No note right now.</string>
+    <string name="add_note_thing">Add note/thing</string>
+    <string name="note">Note</string>
+    <string name="tasks">Tasks</string>
+</resources>
