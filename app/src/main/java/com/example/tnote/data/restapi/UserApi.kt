@@ -31,4 +31,6 @@ interface UserApi {
 
     @GET("7C335094-3221-C2EB-FFE8-C90412FD8F00/1551A224-ED03-4397-A466-3E0112702410/users/isvalidusertoken/{usertoken}")
     fun checkIfValid(@Path("usertoken") userToken: String) : Call<Boolean>
+
+
 }

@@ -38,7 +38,12 @@ class NoteListRecAdapter
     override fun getItemCount(): Int {
         return if (notesList.isEmpty()) {
             0
-        } else 7
+        } else if (notesList.size < 7){
+            notesList.size
+        }
+        else{
+            7
+        }
     }
 
     fun setNotes(notes: List<Note>) {

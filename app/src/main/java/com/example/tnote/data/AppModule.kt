@@ -2,11 +2,8 @@ package com.example.tnote.data
 
 import android.content.Context
 import androidx.room.Room
-import com.example.tnote.data.repository.NoteRepository
+import com.example.tnote.data.repository.*
 import com.example.tnote.data.schedulers.NoteScheduler
-import com.example.tnote.data.repository.OfflineFirstNotesRepository
-import com.example.tnote.data.repository.OfflineFirstTasksRepository
-import com.example.tnote.data.repository.TaskRepository
 import com.example.tnote.data.restapi.NoteApi
 import com.example.tnote.data.restapi.TaskApi
 import com.example.tnote.data.restapi.UserApi
@@ -33,12 +30,12 @@ object AppModule {
     }
 
     @Provides
-    fun getNoteRepository(appDatabase: AppDatabase, noteScheduler: NoteScheduler) : NoteRepository{
-        return OfflineFirstNotesRepository(appDatabase, noteScheduler)
+    fun getNoteRepository(appDatabase: AppDatabase, noteScheduler: NoteScheduler, remoteDataSource: RemoteDataSource) : NoteRepository{
+        return OfflineFirstNotesRepository(appDatabase, noteScheduler, remoteDataSource)
     }
     @Provides
-    fun getTaskRepository(appDatabase: AppDatabase, taskScheduler: TaskScheduler) : TaskRepository{
-        return OfflineFirstTasksRepository(appDatabase, taskScheduler)
+    fun getTaskRepository(appDatabase: AppDatabase, taskScheduler: TaskScheduler, remoteDataSource: RemoteDataSource) : TaskRepository{
+        return OfflineFirstTasksRepository(appDatabase, taskScheduler, remoteDataSource)
     }
 
     @Provides

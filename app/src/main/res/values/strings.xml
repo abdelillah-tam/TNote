@@ -22,4 +22,6 @@
     <string name="add_note_thing">Add note/thing</string>
     <string name="note">Note</string>
     <string name="tasks">Tasks</string>
+    <string name="note_title">Note title</string>
+    <string name="your_note">Your note</string>
 </resources>

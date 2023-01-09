@@ -11,29 +11,31 @@
         android:id="@+id/oerrt"
         style="?attr/bottomSheetStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
+        android:layout_height="600dp"
+        android:padding="2dp"
+        android:background="@drawable/bottom_sheet_card"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         tools:context=".ui.note.AddNoteFragment">
 
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appbarlayout_add_note"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbarlayout_add_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:background="@color/white"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/add_note_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                app:elevation="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/add_note_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:navigationIcon="@drawable/ic_cancel_bottom_sheet"
-                    app:menu="@menu/add_note_menu" />
-            </com.google.android.material.appbar.AppBarLayout>
+                app:navigationIcon="@drawable/ic_cancel_bottom_sheet"
+                app:menu="@menu/add_note_menu" />
+        </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/add_note_title"
@@ -76,7 +78,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/gradient_for_note_entering"
             android:padding="1.5dp"
             app:boxBackgroundColor="@color/white"

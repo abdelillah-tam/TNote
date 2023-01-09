@@ -9,9 +9,12 @@ data class NetworkTask(
     var time: Long,
     var objectId: String
 )
-fun NetworkTask.asEntity() = TaskEntity(id = id,
-    taskName =  taskName,
+
+fun NetworkTask.asEntity() = TaskEntity(
+    id = id,
+    taskName = taskName,
     done = done,
-    isSynchronized =  isSynchronized,
+    isSynchronized = isSynchronized,
     time = time,
-objectId = objectId)
+    objectId = objectId
+)

@@ -7,16 +7,18 @@ import com.example.tnote.data.models.BackendlessUserRegister
 import com.example.tnote.data.models.FacebookRequestBody
 import com.example.tnote.data.models.UserEntity
 import com.example.tnote.data.repository.AuthRepository
+import com.example.tnote.data.repository.NoteRepository
+import com.example.tnote.data.repository.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val noteRepository: NoteRepository,
+    private val taskRepository: TaskRepository
 ) : ViewModel() {
 
     private val _stateBackendlessUserRegister = MutableStateFlow<BackendlessUserRegister?>(null)
@@ -28,10 +30,10 @@ class RegisterViewModel @Inject constructor(
     private val _stateFacebookRequestBody = MutableStateFlow<FacebookRequestBody?>(null)
     val stateFacebookRequestBody = _stateFacebookRequestBody.asStateFlow()
 
-    fun registerUsingFacebookViewModel(facebookRequestBody: FacebookRequestBody){
+    fun registerUsingFacebookViewModel(facebookRequestBody: FacebookRequestBody) {
         viewModelScope.launch {
-            authRepository.registerUsingFacebook(facebookRequestBody).collect{
-                if (it != null){
+            authRepository.registerUsingFacebook(facebookRequestBody).collect {
+                if (it != null) {
                     val req = it
                     _stateFacebookRequestBody.update {
                         req
@@ -41,20 +43,20 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun logoutViewModel(facebookRequestBody: FacebookRequestBody){
+    fun logoutViewModel(facebookRequestBody: FacebookRequestBody) {
         viewModelScope.launch {
             authRepository.logout(facebookRequestBody)
         }
     }
 
-    fun registerBackendless(backendlessUserRegister: BackendlessUserRegister){
+    fun registerBackendless(backendlessUserRegister: BackendlessUserRegister) {
         viewModelScope.launch {
-            authRepository.register(backendlessUserRegister).collect{ reg ->
-                if (reg != null){
+            authRepository.register(backendlessUserRegister).collect { reg ->
+                if (reg != null) {
                     _stateBackendlessUserRegister.update {
                         reg
                     }
-                }else{
+                } else {
                     _stateBackendlessUserRegister.update {
                         null
                     }
@@ -63,34 +65,60 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun loginBackendless(backendlessUserLogin: BackendlessUserLogin){
+    fun loginBackendless(backendlessUserLogin: BackendlessUserLogin) {
         viewModelScope.launch {
             authRepository
                 .loginBackend(backendlessUserLogin)
-                .collect{ backendLog ->
+                .collect { backendLog ->
+                    saveTasksFromOnlineDatabaseToRoomDb(backendLog!!.objectId)
+                    saveNotesFromOnlineDatabaseToRoomDb(backendLog.objectId)
+
                     _stateBackendlessUserLogin.update {
                         backendLog
                     }
+
                 }
+
         }
     }
 
-    fun saveLoginInfosToDatabase(userEntity: UserEntity){
+    fun saveLoginInfosToDatabase(userEntity: UserEntity) {
         viewModelScope.launch {
             authRepository
                 .saveUserInfosToDatabase(userEntity)
-                .collect{
+                .collect {
+
+                }
+
+        }
+    }
+
+    fun checkIfValid(result: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            authRepository
+                .checkIfValid()
+                .collect {
+                    result(it)
+                }
+        }
+    }
+
+    private fun saveNotesFromOnlineDatabaseToRoomDb(objectId: String){
+        viewModelScope.launch {
+            noteRepository
+                .getAllNotesFromDatabase("objectId = '${objectId}'")
+                .collect {
 
                 }
         }
     }
 
-    fun checkIfValid(result: (Boolean) -> Unit){
+    private fun saveTasksFromOnlineDatabaseToRoomDb(objectId: String){
         viewModelScope.launch {
-            authRepository
-                .checkIfValid()
+            taskRepository
+                .getAllTasksFromDatabase("objectId = '${objectId}'")
                 .collect{
-                    result(it)
+
                 }
         }
     }

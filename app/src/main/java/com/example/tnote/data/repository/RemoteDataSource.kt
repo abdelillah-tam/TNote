@@ -104,6 +104,7 @@ class RemoteDataSource @Inject constructor(
                         ) {
                             if (response.code() == 200 && response.body() != null) {
                                 trySend(response.body())
+
                             }
                         }
 
@@ -127,6 +128,7 @@ class RemoteDataSource @Inject constructor(
                         ) {
                             if (response.code() == 200 && response.body() != null) {
                                 trySend(response.body())
+
                             }
                         }
 
@@ -205,5 +207,57 @@ class RemoteDataSource @Inject constructor(
     fun getUser() : Flow<UserEntity> = flow {
         val user = appDatabase.userDao().getUser()[0]
         emit(user)
+    }
+
+    suspend fun getAllTasks(objectId: String) : Flow<List<NetworkTask>> = callbackFlow {
+        withContext(Dispatchers.IO){
+            backendlessTaskApi
+                .getAllTasks(objectId)
+                .enqueue(object : Callback<List<NetworkTask>>{
+                    override fun onResponse(
+                        call: Call<List<NetworkTask>>,
+                        response: Response<List<NetworkTask>>
+                    ) {
+                        if (response.code() == 200 && response.body()!!.isNotEmpty()){
+                            trySend(response.body()!!)
+                        }else{
+                            trySend(emptyList())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<NetworkTask>>, t: Throwable) {
+                        Log.e(TAG, "onFailure: ${t.printStackTrace()}" )
+                    }
+
+                })
+        }
+
+        awaitClose{channel.close()}
+    }
+
+
+    suspend fun getAllNotes(objectId: String) : Flow<List<NetworkNote>> = callbackFlow {
+        withContext(Dispatchers.IO){
+            backendlessNoteApi
+                .getAllNotes(objectId)
+                .enqueue(object : Callback<List<NetworkNote>>{
+                    override fun onResponse(
+                        call: Call<List<NetworkNote>>,
+                        response: Response<List<NetworkNote>>
+                    ) {
+                        if (response.code() == 200 && response.body()!!.isNotEmpty()){
+                            trySend(response.body()!!)
+                        }else{
+                            trySend(emptyList())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<NetworkNote>>, t: Throwable) {
+                        Log.e(TAG, "onFailure: ${t.printStackTrace()}" )
+                    }
+
+                })
+        }
+        awaitClose { channel.close() }
     }
 }

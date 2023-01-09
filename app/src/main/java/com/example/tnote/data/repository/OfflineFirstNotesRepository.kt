@@ -1,18 +1,22 @@
 package com.example.tnote.data.repository
 
 import com.example.tnote.data.AppDatabase
+import com.example.tnote.data.models.NetworkNote
 import com.example.tnote.data.models.NoteEntity
+import com.example.tnote.data.models.asEntity
 import com.example.tnote.data.models.asExternalModel
 import com.example.tnote.data.schedulers.NoteScheduler
 import com.example.tnote.domain.models.Note
 import com.example.tnote.domain.models.asEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class OfflineFirstNotesRepository @Inject constructor(
     private val appDb : AppDatabase,
-    private val noteScheduler: NoteScheduler
+    private val noteScheduler: NoteScheduler,
+    private val remoteDataSource: RemoteDataSource
 ) : NoteRepository {
 
 
@@ -40,5 +44,16 @@ class OfflineFirstNotesRepository @Inject constructor(
         val noteFromDb = getNote(noteEntity.noteTitle!!)
         noteScheduler.scheduleNote(noteFromDb.id)
 
+    }
+
+    override suspend fun getAllNotesFromDatabase(objectId: String): Flow<Unit> = flow{
+        remoteDataSource
+            .getAllNotes(objectId)
+            .collect{
+                if (it.isNotEmpty()){
+                    val noteEntities = it.map(NetworkNote::asEntity)
+                    appDb.noteDao().addAllNotes(noteEntities)
+                }
+            }
     }
 }

@@ -1,23 +1,26 @@
 package com.example.tnote.ui.note
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.tnote.R
 import com.example.tnote.databinding.FragmentAddNoteBinding
-import com.example.tnote.domain.models.Note
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
+class AddNoteFragment : BottomSheetDialogFragment(R.layout.fragment_add_note) {
 
 
     private val addNoteViewModel : AddNoteViewModel by viewModels()
 
     private lateinit var binding : FragmentAddNoteBinding
+
+    companion object{
+        const val TAG = "AddNoteFragment"
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,9 +35,10 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
         binding.addNoteToolbar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.save_note ->{
-                    val note = Note(noteTitle = binding.addNoteTitle.editText?.text.toString(), noteText = binding.addNoteText.editText?.text.toString())
+                   /* val note = Note(noteTitle = binding.addNoteTitle.editText?.text.toString(),
+                        noteText = binding.addNoteText.editText?.text.toString())
 
-                    addNoteViewModel.addNoteViewModel(note)
+                    addNoteViewModel.addNoteViewModel(note)*/
                     true
                 }
                 else -> false
