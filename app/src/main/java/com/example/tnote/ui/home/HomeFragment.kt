@@ -106,7 +106,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         }
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
                 homeViewModel.tasksState
                     .combine(homeViewModel.notesState){ tasks, notes ->
                         if (tasks.isEmpty()) {

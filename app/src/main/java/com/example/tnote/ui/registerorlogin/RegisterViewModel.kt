@@ -100,8 +100,8 @@ class RegisterViewModel @Inject constructor(
     private fun saveNotesAndTasksFromOnlineDatabaseToRoomDb(backendLog: BackendlessUserLogin?) {
         viewModelScope.launch {
             if (backendLog != null) noteRepository
-                .getAllNotesFromDatabase("objectId = '${backendLog.objectId}'")
-                .combine(taskRepository.getAllTasksFromDatabase("objectId = '${backendLog.objectId}'"))
+                .getAllNotesFromDatabase("objectIdOfUser = '${backendLog.objectId}'")
+                .combine(taskRepository.getAllTasksFromDatabase("objectIdOfUser = '${backendLog.objectId}'"))
                 { notesResult, tasksResult ->
                     if (notesResult && tasksResult) {
                         _stateBackendlessUserLogin.update {
