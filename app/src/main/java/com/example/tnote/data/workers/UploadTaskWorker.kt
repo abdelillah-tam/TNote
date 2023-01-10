@@ -43,7 +43,8 @@ class UploadTaskWorker @AssistedInject constructor(
     }
 
     private suspend fun syncTask(taskEntity: TaskEntity) :Result{
-        remoteDataSource.addTaskToDatabase(taskEntity.asNetworkTask())
+        remoteDataSource
+            .addTaskToDatabase(taskEntity.asNetworkTask())
             .collect{
                 if (it != null){
                     appDatabase.taskDao().addTask(it.asEntity())

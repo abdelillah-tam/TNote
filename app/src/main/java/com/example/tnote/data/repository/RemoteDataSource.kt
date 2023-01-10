@@ -181,7 +181,9 @@ class RemoteDataSource @Inject constructor(
 
     fun addTaskToDatabase(networkTask: NetworkTask) : Flow<NetworkTask?> = callbackFlow {
         withContext(Dispatchers.IO){
-            backendlessTaskApi.addTask(networkTask)
+            val network = networkTask
+            backendlessTaskApi
+                .addTask(network)
                 .enqueue(object : Callback<NetworkTask>{
                     override fun onResponse(
                         call: Call<NetworkTask>,
@@ -190,6 +192,9 @@ class RemoteDataSource @Inject constructor(
                         if (response.code() == 200 && response.body() != null){
                             trySend(response.body()!!)
                         }else{
+                            Log.e(TAG, "onResponse: ${response.code()}" )
+                            Log.e(TAG, "onResponse: ${response.message()}" )
+                            Log.e(TAG, "onResponse: ${response.errorBody()!!.string()}" )
                             trySend(null)
                         }
                     }
@@ -209,7 +214,7 @@ class RemoteDataSource @Inject constructor(
         emit(user)
     }
 
-    suspend fun getAllTasks(objectId: String) : Flow<List<NetworkTask>> = callbackFlow {
+    suspend fun getAllTasks(objectId: String) : Flow<List<NetworkTask>?> = callbackFlow {
         withContext(Dispatchers.IO){
             backendlessTaskApi
                 .getAllTasks(objectId)
@@ -221,7 +226,7 @@ class RemoteDataSource @Inject constructor(
                         if (response.code() == 200 && response.body()!!.isNotEmpty()){
                             trySend(response.body()!!)
                         }else{
-                            trySend(emptyList())
+                            trySend(null)
                         }
                     }
 
@@ -236,7 +241,7 @@ class RemoteDataSource @Inject constructor(
     }
 
 
-    suspend fun getAllNotes(objectId: String) : Flow<List<NetworkNote>> = callbackFlow {
+    suspend fun getAllNotes(objectId: String) : Flow<List<NetworkNote>?> = callbackFlow {
         withContext(Dispatchers.IO){
             backendlessNoteApi
                 .getAllNotes(objectId)
@@ -248,7 +253,7 @@ class RemoteDataSource @Inject constructor(
                         if (response.code() == 200 && response.body()!!.isNotEmpty()){
                             trySend(response.body()!!)
                         }else{
-                            trySend(emptyList())
+                            trySend(null)
                         }
                     }
 

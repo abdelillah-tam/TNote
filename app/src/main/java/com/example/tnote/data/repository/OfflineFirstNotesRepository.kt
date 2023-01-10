@@ -46,13 +46,16 @@ class OfflineFirstNotesRepository @Inject constructor(
 
     }
 
-    override suspend fun getAllNotesFromDatabase(objectId: String): Flow<Unit> = flow{
+    override suspend fun getAllNotesFromDatabase(objectId: String): Flow<Boolean> = flow{
         remoteDataSource
             .getAllNotes(objectId)
             .collect{
-                if (it.isNotEmpty()){
+                if (it != null && it.isNotEmpty()){
                     val noteEntities = it.map(NetworkNote::asEntity)
                     appDb.noteDao().addAllNotes(noteEntities)
+                    emit(true)
+                }else{
+                    emit(false)
                 }
             }
     }

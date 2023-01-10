@@ -7,7 +7,7 @@ data class NetworkTask(
     var done: Boolean,
     var isSynchronized: Boolean,
     var time: Long,
-    var objectId: String
+    var objectIdOfUser: String
 )
 
 fun NetworkTask.asEntity() = TaskEntity(
@@ -16,5 +16,5 @@ fun NetworkTask.asEntity() = TaskEntity(
     done = done,
     isSynchronized = isSynchronized,
     time = time,
-    objectId = objectId
+    objectId = objectIdOfUser
 )

@@ -8,5 +8,5 @@ interface TaskRepository {
 
     fun getTasks() : Flow<List<Task>>
     suspend fun addNewTask(task: Task)
-    suspend fun getAllTasksFromDatabase(objectId: String) : Flow<Unit>
+    suspend fun getAllTasksFromDatabase(objectId: String) : Flow<Boolean>
 }

@@ -36,7 +36,9 @@ class EmailLoginFragment : Fragment(R.layout.fragment_email_login) {
         }
 
         lifecycleScope.launch {
-            registerViewModel.stateBackendlessUserLogin.collect{
+            registerViewModel
+                .stateBackendlessUserLogin
+                .collect{
                 if (it != null) {
                     registerViewModel.saveLoginInfosToDatabase(UserEntity(it.usertoken, it.objectId))
                     val intent = Intent(requireContext(), MainActivity::class.java)

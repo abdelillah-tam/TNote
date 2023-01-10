@@ -33,13 +33,16 @@ class OfflineFirstTasksRepository @Inject constructor(
         taskScheduler.scheduleTask(taskFromDb.id)
     }
 
-    override suspend fun getAllTasksFromDatabase(objectId: String): Flow<Unit> = flow {
+    override suspend fun getAllTasksFromDatabase(objectId: String): Flow<Boolean> = flow {
         remoteDataSource
             .getAllTasks(objectId)
             .collect{
-                if (it.isNotEmpty()){
+                if (it != null && it.isNotEmpty()){
                     val taskEntities = it.map(NetworkTask::asEntity)
                     appDatabase.taskDao().addAllTasks(taskEntities)
+                    emit(true)
+                }else{
+                    emit(false)
                 }
             }
     }

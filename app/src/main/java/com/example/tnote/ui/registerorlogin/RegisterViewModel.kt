@@ -70,13 +70,7 @@ class RegisterViewModel @Inject constructor(
             authRepository
                 .loginBackend(backendlessUserLogin)
                 .collect { backendLog ->
-                    saveTasksFromOnlineDatabaseToRoomDb(backendLog!!.objectId)
-                    saveNotesFromOnlineDatabaseToRoomDb(backendLog.objectId)
-
-                    _stateBackendlessUserLogin.update {
-                        backendLog
-                    }
-
+                    saveNotesAndTasksFromOnlineDatabaseToRoomDb(backendLog)
                 }
 
         }
@@ -103,17 +97,30 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    private fun saveNotesFromOnlineDatabaseToRoomDb(objectId: String){
+    private fun saveNotesAndTasksFromOnlineDatabaseToRoomDb(backendLog: BackendlessUserLogin?) {
         viewModelScope.launch {
-            noteRepository
-                .getAllNotesFromDatabase("objectId = '${objectId}'")
+            if (backendLog != null) noteRepository
+                .getAllNotesFromDatabase("objectId = '${backendLog.objectId}'")
+                .combine(taskRepository.getAllTasksFromDatabase("objectId = '${backendLog.objectId}'"))
+                { notesResult, tasksResult ->
+                    if (notesResult && tasksResult) {
+                        _stateBackendlessUserLogin.update {
+                            backendLog
+                        }
+                    } else {
+                        _stateBackendlessUserLogin.update {
+                            backendLog
+                        }
+                    }
+
+                }
                 .collect {
 
                 }
         }
     }
 
-    private fun saveTasksFromOnlineDatabaseToRoomDb(objectId: String){
+    /*private fun saveTasksFromOnlineDatabaseToRoomDb(objectId: String){
         viewModelScope.launch {
             taskRepository
                 .getAllTasksFromDatabase("objectId = '${objectId}'")
@@ -121,5 +128,5 @@ class RegisterViewModel @Inject constructor(
 
                 }
         }
-    }
+    }*/
 }

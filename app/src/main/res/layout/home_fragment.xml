@@ -179,7 +179,6 @@
     <include
         android:id="@+id/standard_sheet"
         layout="@layout/fragment_add_note"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

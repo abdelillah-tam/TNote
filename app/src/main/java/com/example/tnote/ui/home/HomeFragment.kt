@@ -21,7 +21,6 @@ import com.example.tnote.R
 import com.example.tnote.databinding.FragmentAddNoteBinding
 import com.example.tnote.databinding.HomeFragmentBinding
 import com.example.tnote.domain.models.Note
-import com.example.tnote.ui.note.AddNoteFragment
 import com.example.tnote.ui.task.TaskBottomSheet
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textview.MaterialTextView
@@ -54,6 +53,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         super.onViewCreated(view, savedInstanceState)
         binding = HomeFragmentBinding.bind(view)
         homeViewModel.getUser()
+
+        homeViewModel.getNotesViewModel()
+        homeViewModel.getTasksViewModel()
 
         val bottom = BottomSheetBehavior.from(binding.standardSheet.oerrt)
         bottom.isHideable = true

@@ -7,7 +7,7 @@ data class NetworkNote(
     val noteTextNetwork: String?,
     var isSynchronized: Boolean,
     var time: Long,
-    var objectId: String
+    var objectIdOfUser: String
 )
 
-fun NetworkNote.asEntity() = NoteEntity(id, noteTitleNetwork, noteTextNetwork, isSynchronized, time, objectId)
+fun NetworkNote.asEntity() = NoteEntity(id, noteTitleNetwork, noteTextNetwork, isSynchronized, time, objectIdOfUser)

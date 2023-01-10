@@ -14,5 +14,5 @@ interface NoteRepository {
 
     suspend fun addNewNote(note: Note)
 
-    suspend fun getAllNotesFromDatabase(objectId: String) : Flow<Unit>
+    suspend fun getAllNotesFromDatabase(objectId: String) : Flow<Boolean>
 }

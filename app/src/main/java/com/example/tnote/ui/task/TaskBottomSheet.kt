@@ -52,7 +52,6 @@ class TaskBottomSheet : BottomSheetDialogFragment(R.layout.add_task) {
                 done = false, isSynchronized = false, time = datePicker.selection!!, objectId = taskViewModel.objectId.value!!.objectId)
 
             taskViewModel.addTaskViewModel(task)
-            dismiss()
         }
     }
 }

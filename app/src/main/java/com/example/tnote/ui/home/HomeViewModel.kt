@@ -34,10 +34,7 @@ class HomeViewModel @Inject constructor(
     private val _notesState = MutableStateFlow<List<Note>>(emptyList())
     val notesState = _notesState.asStateFlow()
 
-    init {
-        getTasksViewModel()
-        getNotesViewModel()
-    }
+
   /*  private val noteStream: Flow<Note> = noteRepository
         .getNote(id)
         .catch {
