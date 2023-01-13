@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface TaskRepository {
 
-    fun getTasks() : Flow<List<Task>>
+    fun getTasks(time: Long) : Flow<List<Task>>
+    suspend fun getTimes() : Flow<List<Long>>
     suspend fun addNewTask(task: Task)
     suspend fun getAllTasksFromDatabase(objectId: String) : Flow<Boolean>
 }

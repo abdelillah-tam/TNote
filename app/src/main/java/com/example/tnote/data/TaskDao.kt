@@ -11,8 +11,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TaskDao {
 
-    @Query("SELECT * FROM tasks")
-    fun getAllTasks() : Flow<List<TaskEntity>>
+    @Query("SELECT * FROM tasks WHERE time < :time limit 4")
+    fun getAllTasks(time: Long) : Flow<List<TaskEntity>>
+
+    @Query("SELECT time FROM tasks ORDER BY time ASC")
+    fun getTimes() : Flow<List<Long>>
 
     @Query("SELECT * FROM tasks WHERE id = :id")
     suspend fun getTask(id: Int) : TaskEntity

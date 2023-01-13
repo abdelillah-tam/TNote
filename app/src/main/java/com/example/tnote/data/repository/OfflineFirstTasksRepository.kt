@@ -17,9 +17,9 @@ class OfflineFirstTasksRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : TaskRepository{
 
-    override fun getTasks(): Flow<List<Task>> = appDatabase
+    override fun getTasks(time: Long): Flow<List<Task>> = appDatabase
         .taskDao()
-        .getAllTasks()
+        .getAllTasks(time)
         .map {
             it.map(TaskEntity::asExternaleModel)
         }
@@ -31,6 +31,12 @@ class OfflineFirstTasksRepository @Inject constructor(
 
         val taskFromDb = appDatabase.taskDao().getTask(task.taskName!!)
         taskScheduler.scheduleTask(taskFromDb.id)
+    }
+
+    override suspend fun getTimes() : Flow<List<Long>> = flow {
+        appDatabase.taskDao().getTimes().collect{
+            emit(it)
+        }
     }
 
     override suspend fun getAllTasksFromDatabase(objectId: String): Flow<Boolean> = flow {

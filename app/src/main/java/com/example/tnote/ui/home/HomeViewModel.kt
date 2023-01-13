@@ -9,9 +9,7 @@ import com.example.tnote.data.repository.TaskRepository
 import com.example.tnote.domain.models.Note
 import com.example.tnote.domain.models.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,20 +32,19 @@ class HomeViewModel @Inject constructor(
     private val _notesState = MutableStateFlow<List<Note>>(emptyList())
     val notesState = _notesState.asStateFlow()
 
+    private val _tasksTimeState = MutableStateFlow<List<Long>>(emptyList())
+    val tasksTimeState = _tasksTimeState.asStateFlow()
 
-  /*  private val noteStream: Flow<Note> = noteRepository
-        .getNote(id)
-        .catch {
-            emit(Note("", "", ""))
-        }
-*/
 
-    fun getTasksViewModel() {
+
+    fun getTasksViewModel(time: Long) {
         viewModelScope.launch {
-            taskRepository.getTasks()
+            taskRepository.getTasks(time)
                 .collect{ tasksList ->
                     _tasksState.update {
-                        tasksList
+                        tasksList.sortedBy {
+                            it.time
+                        }
                     }
                 }
         }
@@ -61,6 +58,15 @@ class HomeViewModel @Inject constructor(
                     _notesState.update {
                         notesList
                     }
+                }
+        }
+    }
+
+    fun getTimesViewModel(times : (List<Long>) -> Unit){
+        viewModelScope.launch {
+            taskRepository.getTimes()
+                .collect{ tasksTime ->
+                    times(tasksTime)
                 }
         }
     }

@@ -65,6 +65,7 @@ class TaskListRecAdapter
     }
 
     fun setTaskList(list: List<Task>) {
+
         val diff = Diff(taskList, list)
         val diffResult = DiffUtil.calculateDiff(diff)
 
@@ -72,6 +73,7 @@ class TaskListRecAdapter
         taskList.addAll(list)
         diffResult.dispatchUpdatesTo(this)
     }
+
 
     class Diff(
         val oldTaskList: List<Task>,
