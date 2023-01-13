@@ -119,6 +119,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 if (viewPosition != null){
                     val position = binding.days.getChildAdapterPosition(viewPosition)
                     val day = tasksDayAdapter.getDay(position)
+                    tasksDayAdapter.select(position)
                     homeViewModel.getTasksViewModel(day.startOfNextDay)
                 }
                 return true
